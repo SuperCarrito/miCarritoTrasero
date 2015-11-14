@@ -19,7 +19,8 @@ var productSchema = mongoose.Schema({
   stock: {
     type: Number,
     required: true,
-    min: 0
+    min: 0,
+    default:1
   },
   lastStocked: {
     type: Date

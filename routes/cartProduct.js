@@ -31,7 +31,7 @@ router.get('/', function(req, res) {
 });
 
 router.patch('/:cartId/:codebar', function(req, res) {
-  getItemInfo(req.params.barCode);
+  getItemInfo(req.params.codebar);
   carrito.findOneAndUpdate(req.params.cartId, {
       $push: {
         products: {
@@ -89,17 +89,28 @@ router.post('/alta', function(req, res) {
   });
 });
 
-router.patch('/:cartId/finish', function(req, res) {
-  carrito.findOneAndUpdate(req.params.cartId, {
+router.patch('/pay?', function(req, res) {
+  carrito.findOneAndUpdate(req.query.cartId, {
       hasPaid: true
     },
     function(err, carritoNew) {
       if (err) {
+        console.log("error");
         res.sendStatus(500);
         return console.error(err);
       } else {
-        makeHistory_babe(carritoNew, req.body.name);
-        resetCarrito(req.params.cartId);
+
+       makeHistory_babe(carritoNew, req.params.name);
+        carritoNew.totalPrice = 0;
+        carritoNew.hasPaid = false;
+        carritoNew.lastUsed = Date.now;
+        carritoNew.products = {};
+
+        carritoNew.save(function(error) {
+
+          res.send("reset=true");
+        });
+
       }
     });
 });
@@ -118,6 +129,7 @@ function updateTotal(carritoId) {
         function(err, result) {
           if (err) return console.error(err);
         });
+
     }
   });
 }
@@ -129,40 +141,21 @@ function countMuneyz(products) {
     currentTotal += (products[i].numberBought * price) * discount;
   }
 
-return currentTotal;
+  return currentTotal;
 }
 
 function getItemInfo(barcode) {
-  products.find(barcode,
+  products.find({"barCode": barcode} ,
     function(err, producto) {
       if (err) return console.error(err);
-      price =(producto[0].price);
-    discount =  (producto[0].discount);
+      price = producto[0].price;
+      discount = (producto[0].discount);
     });
 }
 
-
-function resetCarrito(cartId) {
-  var newCarrito = {
-    totalPrice: 0,
-    hasPaid: false,
-    lastUsed: Date.now
-  };
-  carrito.findOneAndUpdate(cartId, {
-    $pull: {
-      products: {
-        barCode: req.params.codebar
-      }
-    }
-  });
-  carrito.findOneAndUpdate(cartId, newCarrito);
-
-
-}
-
-function makeHistory_babe(history) {
+function makeHistory_babe(history, name) {
   var newHistory = new stories({
-    shoppingCart: history,
+    shoppingCart: history[0],
     name: name
   });
 
@@ -170,11 +163,7 @@ function makeHistory_babe(history) {
     if (err) {
       return console.error(err);
     } else {
-      res.status(200)
-        .send({
-          saved: true,
-          object: newCarrito
-        });
+      console.log("saving");
     }
   });
 }
