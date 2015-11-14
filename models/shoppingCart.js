@@ -1,5 +1,22 @@
 /*jslint node: true, indent: 2,nomen:true */
 var mongoose = require('mongoose');
+var productObject = mongoose.Schema({
+  barCode: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  numberBought: {
+    type: Number,
+    required: true,
+    min: 1
+  },
+  price: {
+    type: Number,
+    requried: true,
+    min: 0
+  }
+});
 
 var shoppingCartSchema = mongoose.Schema({
   products: [productObject],
@@ -26,23 +43,6 @@ var shoppingCartSchema = mongoose.Schema({
   }
 });
 
-var productObject = mongoose.Schema({
-  barCode: {
-    type: String,
-    required: true,
-    unique: true
-  },
-  numberBought: {
-    type: Number,
-    required: true,
-    min: 1
-  },
-  price: {
-    type: Number,
-    requried: true,
-    min: 0
-  }
-});
 
 
 module.exports = mongoose.model('shoppingCart', shoppingCartSchema);

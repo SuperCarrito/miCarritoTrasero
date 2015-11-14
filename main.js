@@ -4,29 +4,36 @@
 // =============================================================================
 var express = require('express'),
   app = express(),
-  cookieParser = require('cookie-parser'),
+  cors = require('cors'),
   bodyParser = require('body-parser'),
+  mongoose = require('mongoose'),
   router = express.Router(),
   myRoutes = require('./routes/index'),
-  port = process.env.PORT || 80; // set our port
+  configData = require('./config');
 
 app.use(bodyParser.urlencoded({
   extended: true
 }));
-app.use(cookieParser());
-
+app.use(cors());
 app.use(bodyParser.json());
-// ========  View ==========0
-app.engine('html', require('ejs').renderFile);
 
+
+var port = process.env.PORT || 8080, // set our port
+
+  mongoURL = (configData.directory + configData.username + configData.password + configData.address);
+
+mongoose.connect(mongoURL);
 // ROUTES
 // =============================================================================
 
-router.use(function(next) {
+router.use(function (next) {
   next();
 });
+
 myRoutes(app);
 
 // START THE SERVER
 // =============================================================================
-app.listen(port, console.log('Server is running in port: ' + port));
+app.listen(port, function() {
+  console.log('Server is running in port: ' + port + '\nUsing the mongoURL: ' + mongoURL);
+});
