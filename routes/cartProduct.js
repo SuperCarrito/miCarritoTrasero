@@ -164,6 +164,7 @@ function makeHistory_babe(history, name) {
       return console.error(err);
     } else {
       console.log("saving");
+      return;
     }
   });
 }
