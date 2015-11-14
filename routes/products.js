@@ -6,7 +6,7 @@ router.post('/', function(req, res) {
   var newProduct = new products({
     name: req.body.name,
     barCode: req.body.barCode,
-    price: req.body.price || 10,
+    price: req.body.price ,
     discount: req.body.discount || 1,
     stock: req.body.stock || 0
   });

@@ -13,7 +13,7 @@ var productObject = mongoose.Schema({
   },
   price: {
     type: Number,
-    requried: true,
+    required: true,
     min: 0,
     default: 0
   }
