@@ -2,7 +2,8 @@ var express = require('express'),
   router = express.Router(),
   carrito = require('../models/shoppingCart'),
   stories = require('../models/shopHistory'),
-  products = require('../models/products');
+  products = require('../models/products'),
+  price, discount;
 
 //==ROUTES
 router.get('/:cartId', function(req, res) {
@@ -30,12 +31,13 @@ router.get('/', function(req, res) {
 });
 
 router.patch('/:cartId/:codebar', function(req, res) {
+  getItemInfo(req.params.barCode);
   carrito.findOneAndUpdate(req.params.cartId, {
       $push: {
         products: {
           barCode: req.params.codebar,
           numberBought: req.query.q || 1,
-          price: getPrice(req.params.barCode)
+          price: price
         }
       }
     },
@@ -104,7 +106,6 @@ router.patch('/:cartId/finish', function(req, res) {
 
 //===Helper Functions
 function updateTotal(carritoId) {
-
   carrito.find(carritoId, function(err, carritoNew) {
     if (err) {
       res.sendStatus(500);
@@ -115,12 +116,7 @@ function updateTotal(carritoId) {
       };
       carrito.findByIdAndUpdate(carritoNew[0]._id, newCart,
         function(err, result) {
-          if (err) {
-            return console.error(err);
-          } else {
-
-            res.send(result);
-          }
+          if (err) return console.error(err);
         });
     }
   });
@@ -129,45 +125,22 @@ function updateTotal(carritoId) {
 function countMuneyz(products) {
   var currentTotal = 0;
   for (var i = 0; i < products.length; i++) {
-
-  var query =  getProductQuery(products[i]);
-  query.exec(function(err,items){
-     if(err)
-        return cosole.log(err);
-     items.forEach(function(item){
-       console.log("num comprados" + products[i].numberBought);
-       console.log("precio " + products[i].price );
-       console.log("descuento " + getDiscount(products[i].barCode));
-       currentTotal += (products[i].numberBought * products[i].price) * getDiscount(products[i].barCode);
-
-     });
-  });
+    getItemInfo(products[i].barCode);
+    currentTotal += (products[i].numberBought * price) * discount;
   }
-  console.log("total es "  + currentTotal);
-  return currentTotal;
+
+return currentTotal;
 }
 
-function getProductQuery(barcode){
-   var query = producs.find({barCode:barcode});
-   return query;
-}
-
-function getDiscount(barcode) {
-  products.find(barcode, function(err, producto) {
-    if (err) return console.error(err);
-
-    return (producto.discount);
-  });
-}
-
-function getPrice(barcode) {
+function getItemInfo(barcode) {
   products.find(barcode,
     function(err, producto) {
       if (err) return console.error(err);
-      console.log("este es el precio" + producto[0].price);
-      return (producto[0].price);
+      price =(producto[0].price);
+    discount =  (producto[0].discount);
     });
 }
+
 
 function resetCarrito(cartId) {
   var newCarrito = {
