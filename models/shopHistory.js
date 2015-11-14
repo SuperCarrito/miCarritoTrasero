@@ -1,5 +1,4 @@
 var mongoose = require('mongoose');
-var shoppingCart = require('shoppingCart');
 
 var shoppingHistorySchema = mongoose.Schema({
   shoppingCart: {
