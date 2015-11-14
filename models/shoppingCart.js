@@ -3,18 +3,19 @@ var mongoose = require('mongoose');
 var productObject = mongoose.Schema({
   barCode: {
     type: String,
-    required: true,
-    unique: true
+    required: true
   },
   numberBought: {
     type: Number,
     required: true,
-    min: 1
+    min: 1,
+    default: 1
   },
   price: {
     type: Number,
     requried: true,
-    min: 0
+    min: 0,
+    default: 0
   }
 });
 
@@ -23,13 +24,12 @@ var shoppingCartSchema = mongoose.Schema({
   cartId: {
     type: String,
     required: true,
-    unique: true
   },
   totalPrice: {
     type: Number,
     required: true,
-    unique: true,
-    min: 0
+    min: 0,
+    default: 0
   },
   hasPaid: {
     type: Boolean,
@@ -42,7 +42,4 @@ var shoppingCartSchema = mongoose.Schema({
     default: Date.now
   }
 });
-
-
-
 module.exports = mongoose.model('shoppingCart', shoppingCartSchema);

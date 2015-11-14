@@ -5,12 +5,10 @@ var productSchema = mongoose.Schema({
   name: {
     type: String,
     required: true,
-    unique: true
   },
   barCode: {
     type: String,
     required: true,
-    unique: true
   },
   price: {
     type: Number,
@@ -24,8 +22,7 @@ var productSchema = mongoose.Schema({
     min: 0
   },
   lastStocked: {
-    type: Date,
-    required: true
+    type: Date
   }
 });
 
