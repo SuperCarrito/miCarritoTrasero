@@ -1,0 +1,14 @@
+{
+  "name": "miCarrito",
+  "description": "",
+  "version": "0.0.0",
+  "main": "main.js",
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "dependencies": {
+    "express": "^4.13.3",
+    "mongoose": "^4.2.5",
+    "noble": "^1.2.0"
+  }
+}

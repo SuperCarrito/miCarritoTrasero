@@ -1,0 +1,72 @@
+{
+  "project": {
+    "projectSettingsVersion": "2.0.0",
+    "initialAutoPluginCount": 0,
+    "currentBuildConfiguration": "Android",
+    "projectFiles": {},
+    "projectDirectories": {}
+  },
+  "iot-tab": {
+    "fileStatus": {
+      "icon.png": {
+        "previousModTime": 1447466918663,
+        "modified": 1447466918663,
+        "seen": true,
+        "name": "icon.png"
+      },
+      "main.js": {
+        "previousModTime": 1447467984476,
+        "modified": 1447467984476,
+        "seen": true,
+        "name": "main.js"
+      },
+      "miCarrito.xdk": {
+        "previousModTime": 1447466918823,
+        "modified": 1447466918823,
+        "seen": true,
+        "name": "miCarrito.xdk"
+      },
+      "miCarrito.xdke": {
+        "previousModTime": 1447466918833,
+        "modified": 1447466918833,
+        "seen": true,
+        "name": "miCarrito.xdke"
+      },
+      "package.json": {
+        "previousModTime": 1447469010383,
+        "modified": 1447469010383,
+        "seen": true,
+        "name": "package.json"
+      },
+      "README.md": {
+        "previousModTime": 1447466918663,
+        "modified": 1447466918663,
+        "seen": true,
+        "name": "README.md"
+      },
+      "xdk/project-info.json": {
+        "previousModTime": 1447466918806,
+        "modified": 1447466918806,
+        "seen": true,
+        "name": "xdk/project-info.json"
+      }
+    },
+    "boardFileStatus": {
+      "icon.png": {
+        "previousModTime": 1447469015978
+      },
+      "main.js": {
+        "previousModTime": 1447469015978
+      },
+      "package.json": {
+        "previousModTime": 1447469015978
+      },
+      "README.md": {
+        "previousModTime": 1447469015978
+      },
+      "xdk/project-info.json": {
+        "previousModTime": 1447469015978
+      }
+    }
+  }
+}
