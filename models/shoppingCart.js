@@ -2,11 +2,47 @@
 var mongoose = require('mongoose');
 
 var shoppingCartSchema = mongoose.Schema({
-    products: Array,
-    price: Number,
-    discount: Number,
-    stock: Number
-  });
+  products: [productObject],
+  cartId: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  totalPrice: {
+    type: Number,
+    required: true,
+    unique: true,
+    min: 0
+  },
+  hasPaid: {
+    type: Boolean,
+    required: true,
+    default: false
+  },
+  lastUsed: {
+    type: Date,
+    required: true,
+    default: Date.now
+  }
+});
+
+var productObject = mongoose.Schema({
+  barCode: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  numberBought: {
+    type: Number,
+    required: true,
+    min: 1
+  },
+  price: {
+    type: Number,
+    requried: true,
+    min: 0
+  }
+});
 
 
-module.exports = mongoose.model('Products', productSchema);
+module.exports = mongoose.model('shoppingCart', shoppingCartSchema);

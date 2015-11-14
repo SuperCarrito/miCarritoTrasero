@@ -2,12 +2,32 @@
 var mongoose = require('mongoose');
 
 var productSchema = mongoose.Schema({
-    name: String,
-    barCode: String,
-    price: Number,
-    discount: Number,
-    stock: Number
-  });
+  name: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  barCode: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  price: {
+    type: Number,
+    required: true,
+    min: 0
+  },
+  discount: Number,
+  stock: {
+    type: Number,
+    required: true,
+    min: 0
+  },
+  lastStocked: {
+    type: Date,
+    required: true
+  }
+});
 
 
 module.exports = mongoose.model('Products', productSchema);
