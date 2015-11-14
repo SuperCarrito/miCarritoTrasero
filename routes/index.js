@@ -1,6 +1,6 @@
 var cart = require('./cartProduct'),
 products = require('./products'),
-stories = require('./shopHistory');
+stories = require('./history');
 
 module.exports = function (app) {
   app.use('/v1/historial', stories);
